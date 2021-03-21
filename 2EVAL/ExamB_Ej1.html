@@ -91,20 +91,28 @@
 
         function buscar() {
             var nombre = prompt("Introduzca nombre del contacto");
+            nombre = removeAccents(nombre);
+            //console.log(nombre);
             var encuentra = -1;
             for (x in agenda) {
-                if (agenda[x].getNombre.toUpperCase() == nombre.toUpperCase()) {
+                var nombre_agenda = removeAccents((agenda[x].getNombre.toUpperCase()));
+                //console.log(nombre_agenda);
+                if (nombre_agenda == nombre.toUpperCase()) {
                     encuentra = x;
                     break;
                 } else {}
                 str = "Contacto no encontrado";
             }
             if (encuentra == -1) {
-                msg.innerHTML = "<p style='color: red;'>No se ha encontrado el contacto " + nombre.toUpperCase + "</p>";
+                msg.innerHTML = "<p style='color: red;'>No se ha encontrado el contacto " + nombre.toUpperCase() + "</p>";
             } else {
-                msg.innerHTML = "<p>Se ha encontrado el contacto " + nombre.toUpperCase + " en la posición " + (++x) + "</p>";
+                msg.innerHTML = "<p>Se ha encontrado el contacto " + nombre.toUpperCase() + " en la posición " + (++x) + "</p>";
             }
         }
+
+        const removeAccents = (str) => {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        } 
 
         var botones = document.getElementById("botones");
         var listado = document.getElementById("listado");
