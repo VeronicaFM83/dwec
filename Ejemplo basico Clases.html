@@ -1,0 +1,52 @@
+<body>
+	<input type="button" value="ocupa" onclick="ocupaTaxi()" />
+	<input type="button" value="libera" onclick="liberaTaxi()" />
+	<input type="button" value="muestra" onclick="muestraTaxis()" />
+</body>
+
+<script>
+	function claseTaxi(matricula,conductor, ocupado) {
+		this.matricula = matricula;
+		this.conductor = conductor;
+		this.ocupado   = ocupado;
+
+		this.ocupa = function() {
+			this.ocupado = "S";
+		}
+		this.liberar = function() {
+			this.ocupado = "N";
+		}
+		this.toString = function() {
+			return this.matricula + " " + this.conductor + " " + this.ocupado;
+		}
+	}
+
+	var taxis = [];
+	
+	var taxi1 = new claseTaxi("8888GGG", "pepe", "N");
+	taxis.push(taxi1);
+
+	var taxi2 = new claseTaxi("7777HHH", "juan", "N");
+	taxis.push(taxi2);
+	
+	function ocupaTaxi() {
+		for (i=0; i<taxis.length; i++) {
+			if (taxis[i].ocupado == "N") {
+				taxis[i].ocupa();
+				break;
+			}
+		}
+	}
+	
+	function liberaTaxi() {
+		for (i=0; i<taxis.length; i++) {
+			taxis[i].liberar();
+		}
+	}
+
+	function muestraTaxis() {
+		for (i=0; i<taxis.length; i++) {
+			alert( taxis[i].toString() );
+		}
+	}
+</script>
