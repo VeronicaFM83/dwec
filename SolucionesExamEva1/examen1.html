@@ -1,0 +1,65 @@
+<div id="zona"></div>
+
+<script>
+	function claseTienda(producto, talla, precio, almacen) {
+		this.producto = producto;
+		this.talla = talla;
+		this.precio = precio;
+		this.almacen = almacen;
+	}
+	var tienda = [];
+	tienda[0] = new claseTienda("camisa", 36, 45, 3);
+	tienda[1] = new claseTienda("camisa", 38, 45, 1);
+	tienda[2] = new claseTienda("camisa", 40, 45, 0);
+	tienda[3] = new claseTienda("pantalon", 40, 32.50, 6);
+	tienda[4] = new claseTienda("pantalon", 42, 32.50, 8);
+	tienda[5] = new claseTienda("falda", 36, 52, 3);
+	tienda[6] = new claseTienda("falda", 42, 52, 1);
+	tienda[7] = new claseTienda("bufanda", "unica", 29.99, 12);
+	tienda[8] = new claseTienda("pareo", "unica", 31, 9);
+
+	function claseVentas (producto, unidades, precioTotal) {
+		this.producto = producto;
+		this.unidades = unidades;
+		this.precioTotal = precioTotal;
+		this.calculaIVA = function() {
+			return this.precioTotal + (this.precioTotal*21/100);
+		}
+	}
+	var ventas = [];
+
+	function muestraTabla() {
+		var cadena = "";
+		cadena += "<table style='width:100%'>";
+		cadena += "<tr>";
+		cadena += "<th>Producto</th>";
+		cadena += "<th>Talla</th>";
+		cadena += "<th>Precio</th>";
+		cadena += "<th>Almacen</th>";
+		cadena += "<th>Vender</th>";
+		cadena += "</tr>";
+		for (i=0; i<tienda.length; i++) {
+			cadena += "<tr>";
+			cadena += "<td>" + tienda[i].producto + "</td>";
+			cadena += "<td>" + tienda[i].talla + "</td>";
+			cadena += "<td>" + tienda[i].precio + "</td>";
+			cadena += "<td>" + tienda[i].almacen + "</td>";
+			cadena += "<td><input type='button' value='vender' onclick='venta(" + i + ")' /></td>";
+			cadena += "</tr>";
+		}
+		cadena += "</table>";
+		zona.innerHTML = cadena;
+	}
+
+	function venta(i) {
+		var cuantasunidades = prompt("Cuantas quieres comprar");
+		if (cuantasunidades <= tienda[i].almacen) {
+			var unaVenta = new claseVentas(tienda[i].producto, cuantasunidades, tienda[i].precio*cuantasunidades);
+			tienda[i].almacen = tienda[i].almacen - cuantasunidades;
+			unaVenta.calculaIVA();
+			muestraTabla();
+		}
+	}
+	
+	muestraTabla();
+</script>

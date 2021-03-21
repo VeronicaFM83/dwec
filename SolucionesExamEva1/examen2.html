@@ -1,0 +1,18 @@
+<script>
+	var frase = "Segun un estudio de una universidad inglesa";
+	var palabras = frase.split(" ");
+	for (i=0; i<palabras.length; i++) {
+		if (palabras[i].length >3) {
+			var quePalabra = palabras[i];
+			var letras = quePalabra.split("");
+			for (j=1; j<letras.length-2; j++) {
+				var nuevaPosicion = Math.floor(Math.random() * letras.length-2) + 1;
+				var aux = letras[nuevaPosicion];
+				letras[nuevaPosicion] = letras[j];
+				letras[j] = aux;
+			}
+			palabras[i] = letras.join("");
+		}
+	}
+	alert(palabras.join(" "));
+</script>

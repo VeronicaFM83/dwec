@@ -1,0 +1,15 @@
+<script>
+	var mayor = parseInt(prompt("Dame el mayor"));
+	var menor = parseInt(prompt("Dame el menor"));
+	var reloj = setInterval(descuenta, 1000);
+
+	function descuenta() {
+		if (mayor > menor) {
+			mayor = mayor - 1;
+			console.log(mayor);
+		}
+		else {
+			clearInterval(reloj);
+		}
+	}
+</script>
