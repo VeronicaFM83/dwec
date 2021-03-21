@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body style="border: 1px solid black;">
+    <div id="agenda"> </div>
+    <div id="botones">
+        <input type="button" value="Agregar" onclick="agregar();">
+        <input type="button" value="Buscar" onclick="mensajes.innerHTML=buscar();">
+        <input type="button" value="Ordenar" onclick="ordenar();">
+    </div>
+    <div id="mensajes"> </div>
+    <script>
+        /**
+         * Crear una aplicación que permita almacenar Nombre, Teléfono y Correo de una serie de contactos.
+         * De mano, deben estar introducidos los siguientes datos:
+         * Juan	68585848	juan@gmail.com
+         * Ana	68585848	ana@gmail.com
+         * Carlos	68585848	carlos@gmail.com
+         *     La pantalla incluirá:
+         *     •	Una zona donde se mostrarán siempre todos los contactos de la agenda.
+         *     •	Un botón para introducir nuevos contactos (nombre, teléfono y correo).
+         *     •	Un botón para buscar un contacto por su nombre. En el caso de que exista se mostrará su posición.
+         *     En el caso de que no exista, se mostrará un mensaje de error
+         *     •	Un botón que permita ordenar la información, por el nombre de los contactos
+         **/
+
+        var contactos = [];
+        contactos[0] = ['Juan', '68585848', 'juan@gmail.com'];
+        contactos[1] = ['Ana', '68585848', 'ana@gmail.com'];
+        contactos[2] = ['Carlos', '68585848', 'carlos@gmail.com'];
+
+        function mostrarAgenda() {
+            var cadena = "";
+            for (i = 0; i < contactos.length; i++) {
+                //cadena += agenda[i][0] + "-" + agenda[i][1] + "-" + agenda[i][2] + "<br/>";
+                //cadena = agenda[i].join('-');
+                cadena += contactos[i].join('-') + "<br/>";
+            }
+            return cadena;
+        }
+
+        function agregar() {
+            var nombre = prompt('Introduzca nombre');
+            var tlf = prompt('Introduzca teléfono');
+            var email = prompt('Introduzca email');
+            var posicion = contactos.length;
+            contactos[posicion] = [nombre, tlf, email];
+            var contactoStr = contactos[posicion].join('-');
+            alert("Se ha añadido un contacto nuevo: " + contactoStr);
+            agenda.innerHTML = mostrarAgenda();
+        }
+
+        function buscar() {
+            var busca = prompt('Introduzca nombre a buscar');
+            var mensaje = "";
+            for (i = 0; i < contactos.length; i++) {
+                if (busca == contactos[i][0]) {
+                    mensaje += "El contacto está en la posición nº: " + (i + 1) + "<br/>";
+                }
+            }
+            if (mensaje == "") {
+                mensaje = "No existe el contacto";
+            }
+            return mensaje;
+        }
+
+        function ordenar() {
+            contactos = contactos.sort();
+            agenda.innerHTML = mostrarAgenda(); 
+        }
+
+        agenda.innerHTML = mostrarAgenda();
+
+    </script>
+</body>
+
+
+</html>

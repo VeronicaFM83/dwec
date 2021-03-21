@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Pseudo Examen 3</title>
+</head>
+<body>
+    <div id="resultado"></div>
+    <div id="boton"><input type='button' value='Parar' onclick='clearInterval();' /></div>
+    <script>
+        var num = Number.parseInt(prompt("Introduzca número para tabla de multiplicar"));
+        var ini = Number.parseInt(prompt("Introduzca multiplicador inicial"));
+        var fin = Number.parseInt(prompt("Introduzca multiplicador final"));
+
+
+        setInterval(function () {
+            
+            if (ini <= fin) {
+                document.write(num + " x " + ini + " = " + (num * ini) + "<br/>");
+                ini++;
+    
+            }
+        }, 1000);
+
+
+        
+     
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Pseudo examen 1</title>
+</head>
+<body>
+    <script>
+        /**
+         * 1.	Crear una página que permita calcular la retención de un trabajador, en función del sueldo que cobre. 
+         * Para ello, se hará uso de un array que almacenará varias cantidades mínimas, máximas y la retención a aplicar.
+         * Mínimo	Máximo	Retención
+         * 0	999	3
+         * 1000	1299	7
+         * 1300	1799	12
+         * 1800	5000	21
+         * Si un trabajador cobra hasta 999, se le retendrá un 3% de esa cantidad
+         * Si un trabajador cobra hasta 1.299, se le retendrá un 7% de esa cantidad
+         * Mostrar el sueldo que cobraría
+         */
+
+        var miArray = [];
+        miArray[0] = [0, 999, 3];
+        miArray[1] = [1000, 1299, 7];
+        miArray[2] = [1300, 1799, 12];
+        miArray[3] = [1800, 5000, 21];
+
+        
+        var retencion
+        var sueldo = prompt("Introduzca sueldo");
+        for (i = 0; i < miArray.length; i++) {
+            if ((sueldo >= miArray[i][0]) && (sueldo <= miArray[i][1])) {
+                document.write("La retención para su sueldo de " + sueldo + " es el " + miArray[i][2] + "% <br/>");
+                sueldoNeto = sueldo * (100 - 3) / 100;
+                document.write("Cobrará un sueldo de " + sueldoNeto + " euros");
+
+            }
+        }
+    </script>
+
+</body>
+</html>

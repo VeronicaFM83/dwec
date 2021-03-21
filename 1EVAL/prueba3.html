@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: center;
+        }
+        body {
+            width: max-content;
+        }
+        #listadoAgenda {
+            display: grid;
+        }
+    </style>
+    <title>Examen 3</title>
+</head>
+<body onload="listadoAgenda.innerHTML = imprimirAgenda()">
+    <h2>Agenda de contactos</h2>
+    <div id="botones">
+        <input type="button" onclick="nuevoContacto()" value="Nuevo contacto" />
+        <input type="button" onclick="buscarContacto()" value="Buscar contacto" />
+        <input type="button" onclick="ordenarAgenda()" value="Ordenar agenda" />
+
+    </div>
+    <div id="listadoAgenda"></div>
+    <div id="mensajes"></div>
+
+    <script>
+        var contactos = [];
+        contactos[0] = ['Juan', '68585848', 'juan@gmail.com'];
+        contactos[1] = ['Ana', '68585848', 'ana@gmail.com'];
+        contactos[2] = ['Carlos', '68585848', 'carlos@gmail.com'];
+
+        function imprimirAgenda() {
+            var cadena = "<table>";
+            for (i = 0; i < contactos.length; i++) {
+                cadena += "<tr>";
+                for (j = 0; j < contactos[i].length; j++) { // Creo otro bucle para no asumir que solo tendremos 3 campos para cada contacto
+                    cadena += "<td>" + contactos[i][j] + "</td>";
+                }
+                cadena += "</tr>";
+            }
+            cadena += "</table>";
+            console.log(cadena);
+            return cadena;
+        }
+
+        function nuevoContacto() {
+            var nombre = prompt("Introduzca nombre");
+            var tlf = prompt("Introduzca tlf");
+            var email = prompt("Introduzca email");
+            contactos.push([nombre, tlf, email]);
+            console.log(contactos);
+            listadoAgenda.innerHTML = imprimirAgenda()
+        }
+
+        function buscarContacto() {
+            var busqueda = prompt("Introduzca nombre");
+            var posicion = "";
+            var contador = 0;
+            var mensaje = "El contacto buscado ";
+            for (i = 0; i < contactos.length; i++) {
+                if (busqueda == contactos[i][0]) {
+                    posicion += i + "  ";
+                    contador++;
+                }
+            }
+            if (contador == 0) {
+                mensaje += "no existe";
+            } else if (contador == 1) {
+                mensaje += " se encuentra en la posición " + posicion[0];
+            } else {
+                mensaje += " se ha encontrado " + contador + " veces: <br/> Posiciones: " + posicion;
+            }
+            mensajes.innerHTML = mensaje;
+        }
+
+        function ordenarAgenda() {
+            contactos = contactos.sort();
+            listadoAgenda.innerHTML = imprimirAgenda()
+        }
+    </script>
+
+</body>
+</html>

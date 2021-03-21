@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div id="solucion"></div>
+    <div id="recogida">
+        <input type="button" value="ocupar" onclick="ocupaTaxi();">
+        <input type="button" value="vaciar" onclick="vaciaTaxis();">
+    </div>
+
+    <script>
+
+        //var listaTaxis = [['6331GDD', 'Carlos', 'Libre'], ['3112ABC', 'Luis', 'Libre'], ['2345ARR', 'Jorge', 'Libre'], ['5542CBO', 'Ana', 'Libre']]; // Otra forma de crear array multidimensional
+        var taxis = [];
+        taxis[0] = ['6331GDD', 'Carlos', 'Libre'];
+        taxis[1] = ['3112ABC', 'Luis', 'Libre'];
+        taxis[2] = ['5542CBO', 'Ana', 'Libre'];
+        taxis[3] =['2345ARR', 'Jorge', 'Libre'];
+
+        function listaTaxis() {
+            var cadena = "";
+            for (i = 0; i < taxis.length; i++) {
+                cadena += taxis[i][0] + " " + taxis[i][1] + " " + taxis[i][2] + "<br/>";
+            }
+            return cadena;
+        }
+
+        function ocupaTaxi() {
+            for (i = 0; i < taxis.length; i++) {
+                if (taxis[i][2] == "Libre") {
+                    taxis[i][2] = "Ocupado";
+                    break;
+                }
+            }
+            solucion.innerHTML = listaTaxis();
+        }
+
+
+        function vaciaTaxis() {
+            for (i = 0; i < taxis.length; i++) {
+                taxis[i][2] = "Libre";
+            }
+            solucion.innerHTML = listaTaxis();
+        }
+
+        solucion.innerHTML = listaTaxis();
+    </script>
+    
+</body>
+</html>

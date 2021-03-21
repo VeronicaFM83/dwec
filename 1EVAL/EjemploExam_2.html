@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen 2</title>
+</head>
+<body>
+    <script>
+        /**
+         * Dada una cadena alfanumérica, calcular el producto más grande para cada subcadena contigua de 2 dígitos numéricos.
+         * Por ejemplo, para la entrada '73A16H8JB97653', el producto más grande sería:
+         * 7*3 = 21
+         * 3*1 =   3
+         * …..
+         * 8*9 = 72
+         * …. 
+         */
+
+        var cadena = prompt("Escriba una cadena"); // Probar por ejemplo con: A345DW278G5
+        document.write("Cadena: " + cadena + "<br/>");
+        //document.write("Longitud: " + cadena.length + "<br/>"); // Texto debug
+        var num1, num2, test, producto = 0;
+        for (i = 0; i < cadena.length - 1; i++) { //Se posiciona en el primer caracter
+            if (!(isNaN(cadena[i]))) { // Si es un número
+                for (j = i+1; j < cadena.length; j++) { //Comienzo un bucle para comprobar la siguientes posiciones hasta encontrar número
+                    if (!(isNaN(cadena[j]))) { // Si es un número
+                        test = cadena[i] * cadena[j]; // Multiplico
+                        //document.write("i/j: " + i + "/" + j + ". " + cadena[i] + " x " + cadena[j] + " = " + test + "<br/>"); // Texto debug
+                        document.write(cadena[i] + " x " + cadena[j] + " = " + test + "<br/>"); // Escribo el producto
+                        if (test > producto) { // Si es mayor
+                            producto = test; // Almaceno resultado
+                        }
+                        break; // Y salgo del bucle for j
+                    } // Si no es número simplemente continúa el bucle para seguir buscando un número
+                }
+            } // Si no es número simplemente continúa el bucle para seguir buscando un número
+        }
+
+        document.write("Para la entrada \"" + cadena + "\" el producto más grande es: <b>" + producto + "</b>");
+
+
+    </script>
+
+</body>
+</html>

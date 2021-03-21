@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <script>
+        var cadena = prompt("Escriba una cadena"); // Probar por ejemplo con: A345DW278G5
+        var miArray = [];
+        var producto = 0;
+
+        function buscaNumeros() {
+            for (i = 0; i < cadena.length; i++) {
+                if (!(isNaN(cadena[i]))) {
+                    miArray.push(cadena[i]);
+                }
+            }
+            return miArray;
+        }
+
+        function multiplica() {
+            miArray = buscaNumeros();
+            console.log(miArray);
+            for (i = 1; i < miArray.length; i++) {
+                var test = miArray[i - 1] * miArray[i];
+                document.write(miArray[i - 1] + " x " + miArray[i] + " = " + test + "<br/>"); // Escribo el producto
+                console.log(test);
+                if (test > producto) {
+                    producto = test;
+                }
+            }
+            return producto;
+        }
+        multiplica();
+        document.write("Para la entrada \"" + cadena + "\" el producto más grande es: <b>" + producto + "</b>");
+
+    </script>
+
+</body>
+</html>

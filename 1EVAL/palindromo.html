@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Palindromo</title>
+</head>
+<body>
+
+    <script>
+        var cadena = "Amad a la dama" // Alli va Ramon y no maravilla
+        cadena = cadena.trim();
+        cadenaMayus = cadena.toUpperCase();
+        cadenaMayus = cadenaMayus.replace(/ /g, ""); // Reemplaza/elimina todos los espacios (parámetro / /g de global). Otros ejemplos: cadena.replace(/A/g, "a")
+        var long = cadenaMayus.length;
+        var palindromo = "SI";
+        for (i = 0; i < long; i++) {
+            if (cadenaMayus[i] != cadenaMayus[long - 1 - i]) {
+                palindromo = "NO";
+                break;
+            }
+        }
+        document.write("La cadena \"" + cadena + "\" " + palindromo + " es un palíndromo");
+    </script>
+
+</body>
+</html>

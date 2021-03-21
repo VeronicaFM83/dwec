@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U4 Ejercicio 22</title>
+</head>
+<body>
+    <label>
+        Prefijo<br />
+        <input type="text" size="3" maxlength="3" id="prefijo" value="+" />
+        <input type="button" value="?" onclick="abrirVentana();" />
+    </label>
+    <br />
+    <label>
+        Prefijo<br />
+        <input type="text" size="9" maxlength="9" name="numero" pattern="[0-9]*" />
+    </label>
+
+
+        <script>
+
+            function abrirVentana() {
+                ventana = window.open('', 'Prefijos', "width=500, height=500");
+                ventana.document.write("<h1>Lista de prefijos internacionales<br/>");
+                ventana.document.write("España: <input type='button' value='+34' onclick='opener.devolverPrefijo(\"+34\")'><br/>");
+                ventana.document.write("Holanda: <input type='button' value='+31' onclick='opener.devolverPrefijo(\"+31\")'><br/>");
+                ventana.document.write("Gran Bretaña: <input type='button' value='+44' onclick='opener.devolverPrefijo(this.value)'><br/>");
+                ventana.document.write("Estados unidos: <input type='button' value='+01' onclick='opener.devolverPrefijo(this.value)'><br/>");
+                ventana.document.write("Belgica: <input type='button' value='+32' onclick='opener.devolverPrefijo(this.value)'><br/>");
+                ventana.document.write("Grecia: <input type='button' value='+30' onclick='opener.devolverPrefijo(this.value)'><br/>");
+
+
+            }
+
+            function devolverPrefijo(item) {
+                document.getElementById('prefijo').value = item;
+                ventana.close();
+            }
+           /* function validar() {
+                var ok = true;
+                if (document.getElementById("txt1").value == "" ||
+                    document.getElementById("txt2").value == "") {
+                    alert("Introduzca todos los datos");
+            */
+        </script>
+        <p id="prefijo"> </p>
+</body>
+</html>

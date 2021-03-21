@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Pseudo examen 2</title>
+    <style>
+        table, th, tr, td {
+            padding: 3px;
+            border: 1px solid black;
+            min-height:5em;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="botones">
+        <input type="button" value="Conexión de usuario" onclick="usuario.innerHTML = datosUsuario();conex.innerHTML = capturaHora();" />
+        <input type="button" value="Desconexión de usuario" onclick="desconex.innerHTML = capturaHora();" />
+        <input type="button" value="Listado de usuarios" onclick="listadoUsuarios();" />
+    </div>
+    <div>
+        <table style="padding:3px;border:1px solid black;">
+            <tr>
+                <th>Usuario</th>
+                <th>Hora conexión</th>
+                <th>Hora desonexión</th>
+                <th>Duración</th>
+                <th>Importe</th>
+            </tr>
+            <tr>
+                <td id="usuario"></td>
+                <td id="conex"></td>
+                <td id="desconex"></td>
+                <td id="duracion"></td>
+                <td id="importe"></td>
+
+            </tr>
+        </table>
+        <div id="listado"></div>
+    </div>
+    <div id="lista"></div>
+    <script>
+        var usuarios = [];
+        usuarios[0] = ['pepe', '8934y634'];
+        usuarios[1] = ['paco', '8eg24y2'];
+
+        function datosUsuario() {
+            var nombre = prompt("Escriba su nombre");
+            var dni = prompt("Escriba su dni");
+            usuarios.push = [nombre, dni];
+            return nombre;
+        }
+
+
+        function capturaHora() {
+            var tiempo = new Date();
+            var captura = [];
+            captura[0] = tiempo.getHours();
+            captura[1] = tiempo.getMinutes();
+            captura[2] = tiempo.getSeconds();
+            capturaStr = captura.join(":");
+            //var long = (usuarios[usuarios.length].length)-1;          
+            usuarios[usuarios.length - 1].push(capturaStr);
+            dato = usuarios[usuarios.length - 1];
+            return dato;
+            
+        }
+
+        function listadoUsuarios() {
+            for (i = 0; i < usuarios.length; i++) {
+                document.getElementById('listado').innerHTML = '<div>Print this after the script tag' + i + '</div>';
+            }
+           return usuarios;
+
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Pseudo examen 2</title>
+    <style>
+        table, th, tr, td {
+            padding: 3px;
+            border: 1px solid black;
+            min-height:5em;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="botones">
+        <input type="button" value="Conexión de usuario" onclick="datosUsuario();capturaHora();listado.innerHTML=listadoUsuarios();" />
+        
+        <input type="button" value="Listado de usuarios" onclick="listado.innerHTML=listadoUsuarios();" />
+    </div>
+    <div>
+        <div id="listado"></div>
+    </div>
+    <div id="lista"></div>
+    <script>
+        var usuarios = [];
+        usuarios[0] = ['pepe', '12344', '10:35'];
+        usuarios[1] = ['paco', '65472', '23:20'];
+
+        function datosUsuario() {
+            var nombre = prompt("Escriba su nombre");
+            var dni = prompt("Escriba su dni");
+            usuarios.push([nombre, dni]); // Añadimos el usuario al array
+            //return nombre; // Retornamos el nombre
+        }
+
+
+        function capturaHora() {
+            var tiempo = new Date(); // Capturamos fecha hora actual
+            var captura = []; // Creamos un array
+            captura[0] = tiempo.getHours(); // Capturamos hora
+            if (captura[0] < 10) { 
+                captura[0] = "0" + captura[0];// Añadimos un cero a la izq.
+            }
+            captura[1] = tiempo.getMinutes(); // Capturamos minutos
+            if (captura[1] < 10) {
+                captura[1] = "0" + captura[1];// Añadimos un cero a la izq.
+            }
+            capturaStr = captura.join(":"); // Pasamos el array a string separando con ":"
+            usuarios[usuarios.length -1].push(capturaStr); // Lo guardamos al final del último usuario creado en el array
+            return capturaStr; // Retornamos cadena con la hora
+            
+        }
+
+        function listadoUsuarios() {
+            var cadena = "<table><tr><th>Usuario</th><th>DNI</th><th>Hora conexión</th><th>Hora desonexión</th><th>Duración</th><th>Importe</th></tr >";
+
+            for (i = 0; i < usuarios.length; i++) {
+                for (j = 0; j < 6; j++) {
+                    if (usuarios[i][j] == null) {
+                        if (j == 3) {
+                            usuarios[i][j] = "<input type='button' value='Desconexión de usuario' onclick='desconexion(" + i + ");listado.innerHTML=listadoUsuarios();' />";
+                        } else {
+                            usuarios[i][j] = " - ";
+                        }
+                    }
+                }
+                cadena += "<tr><td>" + usuarios[i][0] + "</td><td>" + usuarios[i][1] + "</td><td>" + usuarios[i][2] + "</td><td>" + usuarios[i][3] + "</td><td>" + usuarios[i][4] + "</td><td>" + usuarios[i][5] + "</td></tr>";
+            }
+            cadena += "</table>";
+           return cadena;
+        }
+
+        function desconexion(i) { // Captura hora desconexión y calcula duración
+            usuarios[i][3] = capturaHora();
+            var hhFin = Number.parseInt(usuarios[i][3].substring(0, 2));
+            var mmFin = Number.parseInt(usuarios[i][3].substring(3));
+
+            var hhIni = Number.parseInt(usuarios[i][2].substring(0, 2));
+            var mmIni = Number.parseInt(usuarios[i][2].substring(3, 5));
+
+            var mmDur = mmFin - mmIni;
+            var hhDur = hhFin - hhIni;
+
+            if (mmIni > mmFin) {
+                mmDur = Number.parseInt(mmFin) + (60 - Number.parseInt(mmIni));
+                //console.log(hhIni);
+                hhIni = (Number.parseInt(hhIni) + 1);
+                //console.log(hhIni);
+            }
+            if (hhIni > hhFin) {
+                hhDur = Number.parseInt(hhFin) + (24 - Number.parseInt(hhIni));
+            }
+            usuarios[i][4] = hhDur + ":" + mmDur;
+            usuarios[i][5] = calculoImporte(hhDur,mmDur);
+
+            listado.innerHTML = listadoUsuarios(); // Reescribe tabla de usuarios
+        }
+
+        function calculoImporte(hhDur, mmDur) { // Calcula importe en base a tarifas
+            var importe;
+            hhDur = Number.parseInt(hhDur);
+            mmDur = Number.parseInt(mmDur);
+
+            if (hhDur < 4) {
+                if (hhDur == 3) {
+                    importe = hhDur * 0.50;
+                    if (mmDur > 0) {
+                        importe += 0.25; 
+                    }
+                }
+                importe = (hhDur * 0.50);
+                if (mmDur > 0) {
+                    importe += 0.5;
+                }
+            }
+            //console.log(hhDur);
+            if (hhDur > 3) {
+                importe = (3 * 0.50) + ((hhDur - 3) * 0.25);
+                if (mmDur > 0) {
+                    importe += 0.5;
+                }
+            }
+            return importe;
+        }
+
+        listado.innerHTML = listadoUsuarios();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            width: max-content;
+        }
+        td, tr {
+            border: 1px solid black;
+            min-width: 75px;
+        }
+        .botones {
+            text-align: center;
+        }
+    </style>
+    <title>Examen 1</title>
+</head>
+<body onload="solucion.innerHTML = imprime()">
+
+    <div id="solucion"></div>
+
+    <div class="botones">
+        <input type="button" value="Ocupar" onclick="ocupa()" />
+        <input type="button" value="Vaciar" onclick="libera()" />
+    </div>
+
+    <script>
+
+    var taxis = [];
+    taxis[0] = ['6331GDD', 'Carlos', 'Libre'];
+    taxis[1] = ['3112ABC', 'Luis', 'Libre'];
+    taxis[2] = ['5542CBO', 'Ana', 'Libre'];
+    taxis[3] = ['2345ARR', 'Jorge', 'Libre'];
+
+    function ocupa() {
+        for (j = 0; j < taxis.length; j++) {
+            if (taxis[j][2] == 'Libre') {
+                taxis[j][2] = 'Ocupado';
+                solucion.innerHTML = imprime();
+            break;
+            }
+        }
+    }
+
+    function libera() {
+        for (j = 0; j < taxis.length; j++) {
+            if (taxis[j][2] == 'Ocupado') {
+                taxis[j][2] = 'Libre';
+            }
+        }
+        solucion.innerHTML = imprime();
+    }
+
+    function imprime() {
+    var imprimir = "<table>";
+    for (i = 0; i < taxis.length; i++) {
+    imprimir += "<tr>";
+    imprimir += "<td>" + taxis[i][0] + "</td><td>" + taxis[i][(1)] + "</td><td>" + taxis[i][(2)] + "</td>";
+    imprimir += "</tr>"
+    }
+    imprimir += "</table>";
+    //console.log(imprimir);
+    return imprimir;
+
+    }
+
+    </script>
+
+</body>
+</html>
