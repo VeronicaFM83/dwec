@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 - Ej1</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <script>
+        var msg = document.getElementById("msg");
+
+        class Coche {
+            constructor(marca, modelo, anyo) {
+                this.marca = marca;
+                this.modelo = modelo;
+                this.anyo = anyo;
+                this._propietario = "";
+            }
+
+            get info_coche() {
+                return (this.marca + " " + this.modelo + ". Año: " + this.anyo);
+            }
+
+            set anyo_coche(anyo) {
+                this.anyo = anyo;
+            }
+
+            set propietario(nombre) {
+                this._propietario = nombre;
+            }
+        }
+        var coches = new Array;
+        var coche1 = new Coche("Ford", "Ka", "2012");
+        var coche2 = new Coche("Seat", "Ibiza", "2018");
+        alert(coche1.info_coche);
+        alert(coche2.info_coche);
+        coches.push(coche1);
+        coches.push(coche2);
+        /*
+        for (i = 0; i < coches.length; i++) { // FOR para imprimir array
+            msg.insertAdjacentHTML("beforeend", "Entro en bucle. Vuelta: " + i);
+            msg.insertAdjacentHTML("beforeend", "coches[i]: " + Object.values(coches[i]));
+        }*/
+        for (coche in coches) { // FOR IN equivalente
+            msg.insertAdjacentHTML("beforeend", "coches[i]: " + Object.values(coches[coche]));
+        }
+
+    </script>
+
+</body>
+</html>

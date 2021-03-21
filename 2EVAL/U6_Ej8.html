@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 Ej8</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        String.prototype.recorta = function (num) {
+            var str = this.slice(0, num);
+            str += "(...)";
+            return str;
+        };
+
+        var texto = "En un lugar de la mancha de cuyo nombre no quiero acordarme";
+        var indice = 15;
+        var texto_2 = texto.recorta(indice);
+        console.log(texto);
+        console.log(texto_2);
+    </script>
+</body>
+</html>

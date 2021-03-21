@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 OOP - Ej4</title>
+    <style>
+        * {
+            margin-bottom: 5px;
+        }
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        label {
+            display: inline-block;
+            width: 80px;
+        }
+
+        tfoot td, thead td {
+            font-weight: bold;
+
+        }
+
+    </style>
+</head>
+<body>
+    <form id="formulario">
+        <fieldset>
+            <legend>Equipos informáticos</legend>
+            <label for="txt_micro">Micro: </label><input type="text" id="txt_micro" /><br />
+            <label for="txt_velocidad">Velocidad: </label><input type="text" id="txt_velocidad" /><br />
+            <label for="txt_sistema">Sistema: </label><input type="text" id="txt_sistema" />
+        </fieldset>
+        <div id="btns">
+            <input type="reset" value="Borrar datos" />
+            <input type="button" value="Crear PC" id="btn_add" onclick="addPC()" />
+            <input type="button" value="Mostrar lista" id="btn_show" onclick="showList()" />
+        </div>
+    </form>
+
+    <table id="tabla"></table>
+
+    <div id="msg"></div>
+
+    <script type="text/javascript">
+        // Elementos del html
+        var msg = document.getElementById("msg");
+        var tabla = document.getElementById("tabla");
+        var btns = document.getElementById("btns");
+
+        // Clase PC
+        class PC {
+            constructor(micro, velocidad, sistema) {
+                this.micro = micro;
+                this.velocidad = parseInt(velocidad);
+                this.sistema = sistema;
+            }
+
+            get verOdernador() {
+                var str = this.micro + ", " + this.velocidad + ", " + this.sistema + "<br/>";
+                return str;
+            }
+        }
+        function addPC() {
+            var nuevoPC = new PC(txt_micro.value, txt_velocidad.value, txt_sistema.value);
+            lista_pcs.push(nuevoPC);
+            formulario.reset();
+        }
+        function showList() {
+            // Borro posible contenido anterior
+            tabla.innerHTML = "";
+            // Creo tabla y encabezado
+            tabla.createCaption().innerHTML = "Lista de PCs";
+            var theader = tabla.createTHead(); // Creamos un <thead> vacío, enganchado a <table>
+            var rowH = theader.insertRow(0); // Creamos un <tr> vacío, enganchado al <thead>
+            //rowH.font-weight = "bold";
+            rowH.insertCell(0).innerHTML = "Num."; // Insertamos una nueva celda (<td>), enganchada al <tr>
+            rowH.insertCell(1).innerHTML = "Micro"; // Insertamos una nueva celda (<td>), enganchada al <tr>
+            rowH.insertCell(2).innerHTML = "Velocidad"; // Insertamos una nueva celda (<td>), enganchada al <tr>
+            rowH.insertCell(3).innerHTML = "Sistema"; // Insertamos una nueva celda (<td>), enganchada al <tr>
+
+            var tbody = tabla.createTBody();
+            for (i = 0; i < lista_pcs.length; i++) {
+                var row = tbody.insertRow(i); // Creamos un <tr> vacío, enganchado al <table>
+                var obj = lista_pcs[i];
+                console.log(obj);
+                var strObj = obj.verOdernador;
+                var arrObj = strObj.split(", ");
+                console.log(arrObj);
+                row.insertCell(0).innerHTML = (i+1);
+                for (j = 0; j < arrObj.length; j++) {
+                    row.insertCell(j+1).innerHTML = arrObj[j];
+                }
+                if (i == (lista_pcs.length - 1)) {
+                    // Creo pie de tabla
+                    var tfooter = tabla.createTFoot(); // Creamos un <tfoot> vacío, enganchado a <table>
+                    var rowF = tfooter.insertRow(0);// Creamos un <tr> vacío, enganchado al <tfoot>
+                    var cellF = rowF.insertCell(0); // Insertamos una nueva celda (<td>), enganchada al <tr>
+                    cellF.colSpan = 3;
+                    cellF.innerHTML = "Equipos listados:";
+                    rowF.insertCell(1).innerHTML = (i + 1); // Insertamos una nueva celda (<td>), enganchada al <tr>
+                }
+            }
+        }
+        // Creo objetos
+        var pc1 = new PC("i7", 4770, "Windows");
+        var pc2 = new PC("i5", 3770, "Linux");
+        var lista_pcs = new Array;
+        lista_pcs.push(pc1);
+        lista_pcs.push(pc2);
+        console.log(Object.keys(pc1));
+        console.log(Object.values(pc1));
+
+    </script>
+</body>
+</html>

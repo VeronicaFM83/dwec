@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 - Ej2</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <script>
+        class Alumno {
+            constructor(nombre, nota1, nota2, nota3) {
+                this.nombre = nombre;
+                this.nota1 = nota1;
+                this.nota2 = nota2;
+                this.nota3 = nota3;
+            }
+
+            get info_alumno(){
+            return "Nombre alumno: " + this.nombre +
+                ". Nota 1eval: " + this.nota1 +
+                ". Nota 2eval: " + this.nota2 +
+                ". Nota 3eval: " + this.nota3;
+            }
+
+            get media_alumno() {
+                var media = parseFloat(Math.round((this.nota1 + this.nota2 + this.nota3) / 3)).toFixed(2);
+                return media;
+            }
+        }
+
+        Alumno.prototype.notamedia = 0;
+
+        var msg = document.getElementById("msg");
+        var arrayAlumnos = new Array;
+
+        for (i = 0; i < 6; i++) {
+            var str = new String("Alumno_" + (i + 1));
+            var n1 = Math.round((Math.random() * 10));
+            var n2 = Math.round((Math.random() * 10));
+            var n3 = Math.round((Math.random() * 10));
+            var alumno = new Alumno(str, n1, n2, n3);
+            alumno.notamedia = alumno.media_alumno;
+            arrayAlumnos.push(alumno);
+        }
+
+        arrayAlumnos.sort(function() { return Math.random() - 0.5 }); // DESORDENA
+
+        for (i = 0; i < arrayAlumnos.length; i++) {
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].info_alumno + "<br/>");
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].notamedia + "<br/>")
+        }
+
+        msg.insertAdjacentHTML("beforeend", "<br/>");
+        arrayAlumnos.sort(function (a, b) { // ORDENA POR NOTA MEDIA
+            if (a.notamedia < b.notamedia)
+                return -1;
+            if (a.notamedia > b.notamedia)
+                return 1;
+            return 0;
+        });
+
+        for (i = 0; i < arrayAlumnos.length; i++) {
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].info_alumno + "<br/>");
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].notamedia + "<br/>")
+        }
+
+        msg.insertAdjacentHTML("beforeend", "<br/>");
+        arrayAlumnos.sort(function (a, b) { // ORDENA POR NOMBRE
+            if (a.nombre < b.nombre)
+                return -1;
+            if (a.nombre > b.nombre)
+                return 1;
+            return 0;
+        });
+        for (i = 0; i < arrayAlumnos.length; i++) {
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].info_alumno + "<br/>");
+            msg.insertAdjacentHTML("beforeend", arrayAlumnos[i].notamedia + "<br/>")
+        }
+    </script>
+</body>
+</html>

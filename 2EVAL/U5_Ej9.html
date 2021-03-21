@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U5 DOM . Ejercicio 9</title>
+    <script>
+        var Imagenes = new Array("img/img1.jpg", "img/img (2).jpg", "img/img (3).jpg", "img/img (4).jpg");
+
+        window.onload = cargar_imagen;
+
+        function cargar_imagen() {
+            document.getElementById("imagen").src = Imagenes[0];
+            document.getElementById("imagen").alt = 0;
+            document.getElementById("mini1").src = Imagenes[0];
+            //document.getElementById("mini1").border = 2;
+            document.getElementById("mini2").src = Imagenes[1];
+            document.getElementById("mini3").src = Imagenes[2];
+            document.getElementById("mini4").src = Imagenes[3];
+        }
+        
+        function mostrar_img(img) {
+            document.getElementById("imagen").src = img.src;
+            document.getElementById("imagen").alt = img.alt;
+            quita_borde();
+            img.border = 2;
+        }
+
+        function quita_borde() {
+            var children = document.getElementById("galeria_mini").children;
+            for (var i = 0; i < children.length; i++) {
+                children[i].border = 0;
+            }
+        }
+
+        function avanza() {
+            // var txt = document.getElementById("txt");
+            quita_borde();
+            for (var i = 0; i < Imagenes.length; i++) {
+                var str = "mini" + (i + 1); // guardo cadena con el id de la img
+                var num = parseInt(document.getElementById(str).alt); // guardo alt que coincide con pos en array de la imagen
+                if (num == (Imagenes.length - 1)) { // si es la última imagen establezco 0 (vuelve al comienzo)
+                    document.getElementById(str).src = Imagenes[0];
+                    document.getElementById(str).alt = 0;
+                    //txt.insertAdjacentHTML("beforeend", 'VUELTA fin: ' + i + ": " + str + " " + num + " > " + 0 + '<br/>');
+                } else { // avanzo una posición
+                    document.getElementById(str).src = Imagenes[(num + 1)];
+                    document.getElementById(str).alt = (num + 1);
+                    //txt.insertAdjacentHTML("beforeend", "VUELTA " + i + ": " + str + " Alt: " + num + " > " + (num+1) + "<br/>");
+                }
+                
+            }
+        }
+
+        function retrocede() {
+            //var txt = document.getElementById("txt");
+            quita_borde();
+            for (var i = 0; i < Imagenes.length; i++) {
+                var str = "mini" + (i + 1); // guardo cadena con el id de la img
+                var num = parseInt(document.getElementById(str).alt); // guardo alt que coincide con pos en array  de la imagen
+                if (num == 0) { // si es la primera imagen establezco la última
+                    document.getElementById(str).src = Imagenes[parseInt(Imagenes.length - 1)];
+                    document.getElementById(str).alt = parseInt(Imagenes.length - 1);
+                    // txt.insertAdjacentHTML("beforeend", 'VUELTA fin: ' + i + ": " + str + " " + num + " > " + parseInt(Imagenes.length - 1) + '<br/>');
+                } else {  // retrocedo una posición
+                    document.getElementById(str).src = Imagenes[(num - 1)];
+                    document.getElementById(str).alt = (num - 1);
+                    // txt.insertAdjacentHTML("beforeend", "VUELTA " + i + ": " + str + " Alt: " + num + " > " + (num-1) + "<br/>");
+                }
+            }
+        }
+
+        // PRUEBAS PARA QUE SE CAMBIE LA IMAGEN
+        /*
+        function cambiaImagen(accion) {
+            var txt = document.getElementById("txt");
+            var alt_img = parseInt(document.getElementById("imagen").alt);
+            if (accion == "avanza") {
+                if (alt_img == parseInt(Imagenes.length - 1)) {
+                    document.getElementById("imagen").src = Imagenes[0];
+                    document.getElementById("imagen").alt = 0;
+                    mostrar_img(document.getElementById("imagen"));
+                    txt.insertAdjacentHTML("beforeend", 'IMAGEN: ' + alt_img + " > " + 0 + '<br/>');
+                } else {
+                    document.getElementById("imagen").src = Imagenes[(alt_img + 1)];
+                    document.getElementById("imagen").alt = (alt_img + 1);
+                    mostrar_img(document.getElementById("imagen"));
+                    txt.insertAdjacentHTML("beforeend", 'IMAGEN: ' + alt_img + " > " + (alt_img + 1) + '<br/>');
+                }
+            }
+        }*/
+    </script>
+</head>
+<body>
+    <main>
+        <div id="galeria">
+            <div id="galeria_img">
+                <img id="imagen" height="400" border="5" />
+            </div>
+            <div id="galeria_mini">
+                <input type="button" value="<" onclick="retrocede()" />
+                <img id="mini1" alt="0" width="60" height="60" onclick="mostrar_img(this)" />
+                <img id="mini2" alt="1" width="60" height="60" onclick="mostrar_img(this)" />
+                <img id="mini3" alt="2" width="60" height="60" onclick="mostrar_img(this)" />
+                <img id="mini4" alt="3" width="60" height="60" onclick="mostrar_img(this)" />
+                <input type="button" value=">" onclick="avanza()" />
+            </div>
+            <div id="txt"></div>
+        </div>
+    </main>
+</body>
+</html>

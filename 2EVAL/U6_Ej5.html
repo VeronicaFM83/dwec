@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        table, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+    <title>U6 Ejer5</title>
+</head>
+<body>
+    <form id="formulario">
+        <table>
+            <tr>
+                <td><label for="form_persona">Persona: </label></td>
+                <td><input id="form_persona" type="text" /></td>
+            </tr>
+            <tr>
+                <td><label for="form_cantidad">Cantidad: </label></td>
+                <td><input id="form_cantidad" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" id="btn_ahorrar" value="Ahorrar" onclick="ahorrar(form_persona.value,form_cantidad.value)" />
+                    <input type="button" id="btn_gastar" value="Gastar" onclick="gastar(form_persona.value,form_cantidad.value)" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" id="btn_lista" value="Listas Grupo" onclick="listar()" /></td>
+            </tr>
+        </table>
+    </form>
+    <div id="msg"></div>
+
+    <script type="text/javascript">
+        class Persona {
+            constructor(nombre, ahorros) {
+                this.nombre = nombre;
+                this.ahorros = parseInt(ahorros);
+            }
+
+            get info_persona() {
+                return this.nombre + ", " + this.ahorros + "<br/>";
+            }
+
+            set ahorra(cuanto) {
+                this.ahorros += parseInt(cuanto);
+            }
+
+            set gasta(cuanto) {
+                this.ahorros -= parseInt(cuanto);
+            }
+        }
+
+        function ahorrar(quien, cuanto) {
+            var i;
+            if (isNaN(quien)) { // Compruebo si pasan el nombre o el índice
+                i = busca(quien);
+            } else {
+                i = quien;
+            }
+            if (i > -1 && i < personas.length) { // Compruebo que sea un índice válido
+                personas[i].ahorra = parseInt(cuanto);
+                msg.insertAdjacentHTML("beforeend", personas[i].info_persona);
+            } else {
+                msg.insertAdjacentHTML("beforeend", "NO ENCONTRADO<br/>");
+            }    
+        }
+
+        function gastar(quien, cuanto) {
+            var i;
+            if (isNaN(quien)) { // Compruebo si pasan el nombre o el índice
+                i = busca(quien);
+            } else {
+                i = quien;
+            }
+            if (i > -1 && i < personas.length) { // Compruebo que sea un índice válido
+                personas[i].gasta = parseInt(cuanto);
+                msg.insertAdjacentHTML("beforeend", personas[i].info_persona);
+            } else {
+                msg.insertAdjacentHTML("beforeend", "NO ENCONTRADO<br/>");
+            }
+        }
+
+        function listar() {
+            msg.innerHTML = "";
+            for (i = 0; i < personas.length; i++) {
+                msg.insertAdjacentHTML("beforeend", Object.values(personas[i]) + "<br/>");
+            }
+        }
+
+        function busca(obj_nombre) {
+            for (i = 0; i < personas.length; i++) {
+                var arrPropiedades = Object.values(personas[i]); // Guardo en un array values
+                if (arrPropiedades.indexOf(obj_nombre) != -1) { // Si lo encuentra
+                    return arrPropiedades.indexOf(obj_nombre); // Devuelvo index
+                }
+            }
+            return -1; // No encontrado 
+        }
+
+        var person1 = new Persona("Roman Fuster", parseInt(27000));
+        var person2 = new Persona("Tuko Tukeras", parseInt(90000));
+        person1.ahorra = 1000;
+        var personas = new Array;
+        personas.push(person1);
+        personas.push(person2);
+    </script>
+
+</body>
+</html>

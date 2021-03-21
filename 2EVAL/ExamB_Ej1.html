@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Otro examen Ej1</title>
+</head>
+<body onload="mostrar();">
+    <div id="botones">
+        <input type="button" id="add" value="Agregar" onclick="agregar();" />
+        <input type="button" id="search" value="Buscar" onclick="buscar();" />
+    </div>
+    <div id="listado"></div>
+    <div id="msg"></div>
+    <script>
+        class Contacto {
+            constructor(nombre, tlf, email) {
+                this._nombre = nombre;
+                this._tlf = tlf;
+                this._email = email;
+            }
+            set setNombre(newNombre) {
+                this._nombre = newNombre;
+            }
+            set setTlf(newTlf) {
+                this._tlf = newTlf;
+            }
+            set setEmail(newEmail) {
+                this._email = newEmail;
+            }
+
+            get getNombre() {
+                return this._nombre;
+            }
+            get getTlf() {
+                return this._tlf;
+            }
+            get getEmail() {
+                return this._email;
+            }
+
+            get toString() {
+                return this._nombre + " - " + this._tlf + " - " + this._email;
+            }
+        }
+
+        function formatTLF(num) {
+            num = num.trim();
+            if (isNaN(num) || num.length < 9) {
+                alert("Error, introduzca un número válido");
+                return "ERROR";
+            } else {
+                var newTlf = num.substring(0, 3) + "." + num.substring(3, 5) + "." + num.substring(5, 7) + "." + num.substring(7, 9);
+                return newTlf;
+            }
+        }
+
+        function formatEmail(email) {
+            email = email.trim();
+
+            if (email == null || !email.includes("@") || !email.includes(".")){
+                alert("Error, introduzca un email válido");
+                return "ERROR";
+            } else {
+                return email;
+            }
+        }
+
+        function mostrar() {
+            var str = "";
+            for (x in agenda) {
+                str += "<p>" + agenda[x].toString + "</p>";
+            }
+            listado.innerHTML = str;
+            msg.innerHTML = "";
+        }
+
+        function agregar() {
+            do {
+                var newNombre = prompt("Introduzca nombre", "María");
+            } while (newNombre == "");
+            do {
+                var newTlf = formatTLF(prompt("Introduzca nº de telefono", "987654321"));
+            } while (newTlf == "ERROR");
+            do {
+                var newEmail = formatEmail(prompt("Introduzca email", "hola@hola.com"));
+            } while (newEmail == "ERROR");
+            agenda.push(new Contacto(newNombre, newTlf, newEmail));
+            mostrar();
+        }
+
+        function buscar() {
+            var nombre = prompt("Introduzca nombre del contacto");
+            var encuentra = -1;
+            for (x in agenda) {
+                if (agenda[x].getNombre.toUpperCase() == nombre.toUpperCase()) {
+                    encuentra = x;
+                    break;
+                } else {}
+                str = "Contacto no encontrado";
+            }
+            if (encuentra == -1) {
+                msg.innerHTML = "<p style='color: red;'>No se ha encontrado el contacto " + nombre.toUpperCase + "</p>";
+            } else {
+                msg.innerHTML = "<p>Se ha encontrado el contacto " + nombre.toUpperCase + " en la posición " + (++x) + "</p>";
+            }
+        }
+
+        var botones = document.getElementById("botones");
+        var listado = document.getElementById("listado");
+        var msg = document.getElementById("msg");
+        var agenda = [new Contacto("pepe", formatTLF("691564864"), "pepe@gmail.com"), new Contacto("ana", formatTLF("691564865"), "ana@gmail.com")];
+        agenda.push(new Contacto("carlos", formatTLF("691564866"), "carlos@gmail.com"));
+        
+        console.log(agenda);
+    </script>
+</body>
+</html>

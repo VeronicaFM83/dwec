@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Otro exam Ej3</title>
+</head>
+<body>
+    <div id="contenido"></div>
+    <div id="msg"></div>
+    <script>
+        var palabra = prompt("Escriba una palabra", "Prueba");
+        var nuevaPalabra = "";
+        var n;
+        for (let i = 0; i < palabra.length; i++) {
+            n = palabra.charCodeAt(i);
+            console.log(n);
+            if ((i + 1) % 2 == 0) {
+                nuevaPalabra += String.fromCharCode(--n);
+            } else {
+                nuevaPalabra += String.fromCharCode(++n); 
+            }
+            console.log(n);    
+        }
+        alert(nuevaPalabra);
+
+    </script>
+
+</body>
+</html>

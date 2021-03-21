@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        String.prototype.trimAll = function () {
+            return this.replace(/\s+/g, '');
+        };
+
+        /*if (!String.prototype.trim) {
+            (function () {
+                String.prototype.trim = function () {
+                    return this.replace(/\s+/g, '');
+                };
+            })();
+        }*/
+
+
+        texto = "  Hola y adios  ";
+        console.log(texto);
+        console.log(texto.length);
+        texto_2 = texto.trimAll();
+        console.log(texto_2);
+        console.log(texto_2.length);
+
+    </script>
+
+</body>
+</html>

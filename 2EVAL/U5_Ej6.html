@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U5 - DOM. Ejercicio 6</title>
+    <style>
+        #contenedor {
+            background-color: gray;
+            width: max-content;
+            padding: 5px;
+            border: 2px solid black;
+            position: absolute;
+        }
+
+        #si {
+            position: absolute;
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <script language="Javascript" type="text/javascript">
+        function mueve() {
+            var x = parseInt(Math.random() * 150);
+            var y = parseInt(Math.random() * 300);
+            botonSi = document.getElementById('si');
+            botonSi.style.top = y + 'px';
+            botonSi.style.left = x + 'px';
+        }
+
+    </script>
+    
+    <div id="contenedor">
+        <p>¿Cree que va a aprobar este curso?</p>
+        <input id ="si" type="button" value="Sí" onmouseover="mueve();"/>
+        <input type="button" value="No" onclick="alert('¡Qué negativo!');"/>
+    </div>
+</body>
+</html>

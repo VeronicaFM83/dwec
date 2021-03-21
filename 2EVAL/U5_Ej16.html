@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U5 DOM - Ej 16</title>
+</head>
+<body>
+    <h1>Pulsa en cualquier sitio</h1>
+    <div id="tiempo"></div>
+    <div id="msg"></div>
+    <script>
+        var i = 0;
+        var msg = document.getElementById("msg");
+        document.addEventListener("click", function cuenta_click() {
+            if (i == 0) {
+                contador();
+            }
+            i++;
+            msg.innerText = "Nº de clicks: " + i;
+        });
+
+        function contador() {
+            var n = 0;
+            var t = document.getElementById("tiempo");
+            var intervalo = window.setInterval(function () {
+                n++;
+                t.innerHTML = n;
+                if (n == 5) {
+                    if (i < 10) {
+                        alert("Lo siento, solo ha clicado " + i + " veces en 5 seg");
+                    } else {
+                        alert("Felicidades, ha clicado " + i + " veces en 5 seg");
+                    }
+                    n = 0;
+                    clearInterval(intervalo);
+                    i = 0;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

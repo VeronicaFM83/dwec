@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen Ej 1</title>
+    <style>
+        body {
+            width: max-content;
+        }
+
+        td, tr {
+            border: 1px solid black;
+            min-width: 75px;
+        }
+
+        .botones {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body onload="tienda.innerHTML = imprimeTabla(arrayTienda);">
+    <div id="tienda"></div>
+    <div id="ventas"></div>
+    <div id="msg"></div>
+    <script>
+        class Tienda {
+            constructor(producto, talla, precio, udsAlmacen) {
+                this.producto = producto;
+                this.talla = talla;
+                this.precio = precio;
+                this.udsAlmacen = udsAlmacen;
+            }
+
+            get toString() {
+                return "<p>Producto: " + this.producto + ", talla=" + this.talla + ", precio=" + this.precio + "€, udsAlmacen=" + this.udsAlmacen + "</p>";
+            }
+
+            get toTable() {
+                return "<td>" + this.producto + "</td><td>" + this.talla + "</td><td>" + this.precio + "</td><td>" + this.udsAlmacen + "</td>";
+            }
+        }
+
+        class Ventas {
+            constructor(producto, uds, precioTotal) {
+                this.producto = producto;
+                this.uds = uds;
+                this.precioTotal = precioTotal;
+                this.calculaIVA = Math.floor(this.precioTotal * 121) / 100;
+            }
+
+            get toString() {
+                return "<p>Producto: " + this.producto + ", uds=" + this.uds + ", precio=" + this.precioTotal + "€, precioIVAincl=" + this.calculaIVA + "€</p>";
+            }
+
+            get toTable() {
+                return "<td>" + this.producto + "</td><td>" + this.uds + "</td><td>" + this.precioTotal + "</td><td>" + this.calculaIVA + "</td>";
+            }
+        }
+
+        function creaProductos(n) {
+            for (let i = 0; i < n; i++) {
+                let producto = randomArray(tipoProducto);
+                let talla = randomArray(tallas);
+                let precio = Math.floor(Math.random() * 10000) / 100;
+                let uds = Math.floor(Math.random() * 12)+1;
+                var nuevo = new Tienda(producto, talla, precio, uds);
+                arrayTienda.push(nuevo);
+            }
+        }
+
+        function randomArray(array) {
+            let random = Math.floor(Math.random() * (array.length - 1));
+            return array[random];
+        }
+
+        function muestra(array) {
+            var texto = "<h3>" + array[0].constructor.name + "</h3>"; // Devuelve el nombre de la clase
+            for (let i = 0; i < array.length; i++) {
+                //console.log(array[i].toString);
+                texto += array[i].toString;
+            }
+            return texto;
+        }
+
+        function imprimeTabla(array) {
+            var titulos = Object.keys(array[0]);
+            var str = "<h3>" + array[0].constructor.name + "</h3><table><tr>";
+            for (let i = 0; i < titulos.length; i++) {
+                str += "<th>" + titulos[i] + "</th>";
+            }
+            str += "</tr>";
+            for (let i = 0; i < array.length; i++) {
+                str += "<tr>" + array[i].toTable;
+                if (array[0].constructor.name == "Tienda") {
+                    str += '<td><input type="button" value="Comprar" onclick="comprar(';
+                    str += i;
+                    str += ');"</td>';
+                }
+                str += "</tr >";
+            }
+            str += "</table>";
+            return str;
+        }
+
+        function compruebaExistente(obj) {
+            for (let i = 0; i < arrayVentas.length; i++) {                
+                if (obj.producto == arrayVentas[i].producto && obj.precioTotal == arrayVentas[i].precioTotal) {
+                    arrayVentas[i].uds++;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function comprar(i) {
+            var cantidad = prompt("Introduzca unidades:", 1);
+           // try {
+                if (isNaN(cantidad) || cantidad == 0) {
+                    alert("Introduzca una cantidad correcta");
+                } else if (arrayTienda[i].udsAlmacen >= cantidad) {
+                    console.log("Has comprado: " + arrayTienda[i].producto);
+                    var obj = new Ventas(arrayTienda[i].producto, cantidad, arrayTienda[i].precio);
+                    if (!compruebaExistente(obj)) {
+                        arrayVentas.push(obj);
+                    }
+                    arrayTienda[i].udsAlmacen = (arrayTienda[i].udsAlmacen - cantidad);
+                    if (arrayTienda[i].udsAlmacen == 0) {
+                        arrayTienda.splice(i, 1);
+                    }
+                    ventas.innerHTML = muestra(arrayVentas);
+                    tienda.innerHTML = imprimeTabla(arrayTienda);
+                    ventas.innerHTML = imprimeTabla(arrayVentas);
+                } else {
+                    alert("No hay esa cantidad en existencia");
+                }
+           /* } catch(error) {
+                console.error(error);
+            }*/
+        }
+
+        var tienda = document.getElementById("tienda");
+        var ventas = document.getElementById("ventas");
+        var msg = document.getElementById("msg");
+
+        const tipoProducto = ["Camisa", "Pantalón", "Falda", "Bufanda", "Pareo"];
+        const tallas = [34, 36, 38, 40, 42, 44, 46];
+
+        var arrayTienda = new Array();
+        var arrayVentas = new Array();
+        var nuevaTienda = new Tienda("Camisa", 36, 45, 3);
+        arrayTienda.push(nuevaTienda);
+        creaProductos(10);
+    </script>
+</body>
+</html>

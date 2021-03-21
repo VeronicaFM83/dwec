@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Exam Js Ej2</title>
+</head>
+<body>
+    <script>
+        var frase = prompt("Introduzca una frase", "Segun un estudio de una universidad inglesa");
+        var arrPalabras = [];
+        arrPalabras = frase.split(" ");
+        var arrDesorden = [];
+        for (var x in arrPalabras) {
+            //console.log(arrPalabras[x]);
+            if (arrPalabras[x].length > 3) {
+                var indices = [];
+                for (var i = 1; i < (arrPalabras[x].length - 1); i++) {
+                    indices[i-1] = i;
+                }
+                indices = indices.sort(function () { return Math.random() - 0.5 });
+                //console.log(indices);
+                var palabra = arrPalabras[x][0];
+                for (var i = 1; i < arrPalabras[x].length - 1; i++) {
+                    palabra += arrPalabras[x][indices[i-1]];
+                }
+                palabra += arrPalabras[x][arrPalabras[x].length - 1];
+                arrDesorden.push(palabra);
+            } else {
+                arrDesorden[x] = arrPalabras[x];
+            }
+        }
+        //console.log(arrDesorden);
+        var str = arrDesorden.join(" ");
+        alert(str);
+    </script>
+</body>
+</html>

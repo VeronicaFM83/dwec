@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 Ej6</title>
+</head>
+<body>
+    <form id="acciones">
+        <fieldset style="border:none;">
+            <legend>Seleccione una opción</legend>
+            <input type="button" id="btn_listar" value="Listar Usuarios" onclick="listar()" />
+            <input type="button" id="btn_alta" value="Alta usuario" onclick="alta()" />
+            <input type="button" id="btn_baja" value="Baja usuario" onclick="baja()" />
+            <input type="button" id="btn_modifica" value="Modificar clave" onclick="modifica()" />
+        </fieldset>
+    </form>
+    <form id="formulario" style="display: none;">
+        <fieldset>
+            <legend id="leyenda"></legend>
+            <div id="login">
+                <label for="txt_nombre">Nombre: </label><input type="text" id="txt_nombre" class="entrada" />
+                <label for="txt_clave">Contraseña: </label><input type="text" id="txt_clave" class="entrada" />
+            </div>
+            <div id="seguridad" style="display: none;">
+                <label for="txt_pregunta">Pregunta de seguridad: </label><input type="text" id="txt_pregunta" class="entrada" />
+                <label for="txt_respuesta">Respuesta: </label><input type="text" id="txt_respuesta" class="entrada" />
+            </div>
+            <div id="botones">
+                <input type="reset" id="btn_borra" value="Borrar" />
+                <input type="button" id="btn_envia" value="Confirmar" onclick="" autofocus/>
+            </div>
+        </fieldset>
+    </form>
+
+    <div id="listado"></div>
+    <div id="msg"></div>
+
+    <script type="text/javascript">
+        // Elementos HTML
+        var lista = document.getElementById("lista");
+        var leyenda = document.getElementById("leyenda");
+        var msg = document.getElementById("msg");
+
+        class Usuario {
+            constructor(nombre, clave, pregunta, respuesta) {
+                this.nombre = nombre;
+                this.clave = clave;
+                this.pregunta = pregunta;
+                this.respuesta = respuesta;
+            }
+
+            get info_usuario() {
+                return this.nombre + ", " + this.clave + ", " + this.pregunta + ", " + this.respuesta + "<br/>";
+            }
+
+            get get_clave() { return this.clave; }
+
+            set set_clave(nueva_clave) { this.clave = nueva_clave; }
+
+            set set_pregunta(nueva_pregunta) { this.pregunta = nueva_pregunta; }
+
+            set set_respuesta(nueva_respuesta) { this.respuesta = nueva_respuesta; }
+        }
+
+        function comprueba() {
+            var entradas = document.getElementsByClassName("entrada");
+            for (i = 0; i < entradas.length; i++) {
+                if (entradas[i].type == "text" && entradas[i].value == "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function listar() {
+            listado.innerHTML = "<h2>Lista de usuarios:</h2>";
+            for (i = 0; i < users.length; i++) {
+                listado.insertAdjacentHTML("beforeend", users[i].info_usuario);
+            }
+        }
+
+        function alta() {
+            leyenda.innerHTML = "Alta de nuevo usuario";
+            formulario.style = "display: display;"
+            seguridad.style = "display: display;"
+            btn_envia.onclick = function () {
+                if (comprueba()) {
+                    var nuevo_user = new Usuario(txt_nombre.value, txt_clave.value, txt_pregunta.value, txt_respuesta.value);
+                    users.push(nuevo_user);
+                    msg.innerHTML = "";
+                    listar();
+                } else {
+                    msg.innerHTML = "COMPLETE TODOS LOS CAMPOS";
+                }
+            }
+        }
+
+        function baja() {
+            leyenda.innerHTML = "Baja de usuario";
+            formulario.style = "display: display;"
+            seguridad.style = "display: none;"
+            btn_envia.onclick = function () {
+                var i = busca(txt_nombre.value);
+                if ((i != -1) && (busca(txt_clave.value) == i)) { // Si se encuentra el usuario y la clave
+                    //console.log(true);
+                    users.splice(i, 1); // Eliminar usuario
+                    msg.innerHTML = "";
+                    listar();
+                } else {
+                    msg.innerHTML = "No coincide";
+                }
+            }
+        }
+
+        function modifica() {
+            leyenda.innerHTML = "Modifica usuario";
+            formulario.style = "display: display;"
+            seguridad.style = "display: none;"
+            btn_envia.onclick = function () {
+                var i = busca(txt_nombre.value);
+                if ((i != -1) && (busca(txt_clave.value) == i)) { // Si se encuentra el usuario y la clave
+                    //console.log(true);
+                    seguridad.style = "display: display;"
+                    txt_pregunta.value = users[i].pregunta;
+                    txt_pregunta.disabled = "disabled";
+                    msg.innerHTML = "";
+                    btn_envia.onclick = function () {
+                        var nuevaClave = prompt("Introduzca nueva clave");
+                        users[i].set_clave = nuevaClave;
+                        listar();
+                    }
+                } else {
+                    msg.innerHTML = "No coincide";
+                }
+            }
+        }
+
+        function busca(obj_valor) {
+            console.log(obj_valor);
+            for (i = 0; i < users.length; i++) {
+                var arrPropiedades = Object.values(users[i]); // Guardo en un array values
+                if (arrPropiedades.indexOf(obj_valor) != -1) { // Si lo encuentra
+                    return i; // Devuelvo index array users
+                }
+            }
+            return -1; // No encontrado 
+        }
+
+        var user1 = new Usuario("Vero", "B3r0", "Perrin?", "Tuko");
+        var user2 = new Usuario("Roman", "r0m4n", "Año nac", "1983");
+        var users = new Array;
+        users.push(user1);
+        users.push(user2);
+    </script>
+</body>
+</html>

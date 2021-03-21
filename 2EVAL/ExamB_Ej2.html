@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Otro examen Ej2</title>
+</head>
+<body>
+    <div id="botones">
+        <input type="button" value="Generar" onclick="generar();" />
+        <input type="button" value="Estadísticas" onclick="mostrar();" />
+    </div>
+    <div id="msg"></div>
+    <div id="oculto" style="display:none;"></div>
+    
+    <script>
+        var msg = document.getElementById("msg");
+        var oculto = document.getElementById("oculto");
+
+        function generar() {
+            var arrayNum = [];
+            for (let i = 0; i < 20; i++) {
+                arrayNum[i] = Math.floor(Math.random() * 10)+1;
+            }
+            msg.innerHTML = "<p>Se han generado 10 números</p>";
+            console.log(arrayNum); 
+            imprimir(arrayNum);
+        }
+
+        function imprimir(array) {
+            oculto.innerHTML = "";
+            var arrayContador = [];
+            for (var i = 1; i <= 10; i++) {
+                var contador = 0;
+                for (x in array) {
+                    if (array[x] == i) {
+                        contador++;
+                    }
+                }
+                arrayContador.push(contador);
+            }
+            for (x in arrayContador) {
+                var num = parseInt(x) + 1;
+                console.log(arrayContador[x]);
+                oculto.insertAdjacentHTML("beforeend", num + " > " + arrayContador[x] + "<br/>");
+            } 
+        }
+
+        function mostrar() {
+            oculto.style.display = oculto.style.display === 'none' ? '' : 'none';
+        }
+
+    </script>
+
+</body>
+</html>

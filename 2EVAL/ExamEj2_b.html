@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Exam Ej2 solucion alternativa</title>
+</head>
+<body>
+    <script>
+        var frase = prompt("Introduzca una frase", "Segun un estudio de una universidad inglesa");
+        var arrPalabras = [];
+        arrPalabras = frase.split(" ");
+        var fraseDesorden = "";
+        for (var x in arrPalabras) {
+            if (arrPalabras[x].length > 3) {
+                fraseDesorden += arrPalabras[x][0];
+                var letras = arrPalabras[x].substr(1, (arrPalabras[x].length - 2));
+                var arrLetras = [];
+                arrLetras = letras.split("")
+                arrLetras = arrLetras.sort(function () { return Math.random() - 0.5 });
+                fraseDesorden += arrLetras.join("");
+                fraseDesorden += arrPalabras[x][(arrPalabras[x].length - 1)];
+            } else {
+                fraseDesorden += arrPalabras[x];
+            }
+            fraseDesorden += " ";
+        }
+        alert(fraseDesorden);
+    </script>
+</body>
+</html>

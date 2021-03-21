@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U6 Ej10</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <script>
+        class Persona {
+            constructor(nombre, edad, dni, sexo, peso, altura) {
+                this.nombre = nombre;
+                this.edad = parseInt(edad);
+                this.dni = dni;
+                this.sexo = sexo;
+                this.peso = parseFloat(peso);
+                this.altura = parseInt(altura);
+            }
+
+            get toString() {
+                return this.nombre + " de " + this.edad + " años y dni " + this.dni + ", pesa " + this.peso + "Kg y mide " + this.altura + "cm. <br/>";
+            }
+
+            get esmayordeedad() {
+                if (this.edad > 17) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            get calcularIMC() {
+                var calculoIMC = this.peso / Math.pow((this.altura / 100), 2);
+                return Math.round(calculoIMC*100)/100;
+            }
+            
+        }
+        var msg = document.getElementById("msg");
+        var person1 = new Persona("Vero", 37, "71885796d", "M", 51, 165);
+        msg.insertAdjacentHTML("beforeend", person1.toString);
+        msg.insertAdjacentHTML("beforeend", "¿Es mayor de edad?: " + person1.esmayordeedad);
+        msg.insertAdjacentHTML("beforeend", "<br/>Cálculo IMC: " + person1.calcularIMC);
+        console.log(person1);
+    </script>
+</body>
+</html>

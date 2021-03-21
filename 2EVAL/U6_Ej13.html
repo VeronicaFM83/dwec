@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Cine</title>
+</head>
+<body>
+    <div id="msg"></div>
+    <script>
+
+        var id = 0;
+        class Sala {
+            constructor(columnas, filas, pelicula, precio) { 
+                this.nombre = "Sala" + id++;
+                this.asientos = creaAsientos(columnas, filas);
+                this.pelicula = pelicula;
+                this.precio = precio;
+            }
+
+            get toString() {
+                return "<p><b>" + this.nombre + "</b>. Nº asientos: " + (this.asientos.length * this.asientos[0].length) + ". Pelicula actual: " + this.pelicula.titulo + ". Precio entrada: " + this.precio + " euros</p>";  
+            }
+
+        }
+
+        function creaAsientos(columnas, filas) {
+            var asientos = new Array();
+
+            for (let i = 0; i < filas; i++) {
+                //var col = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Forma poco elegante
+                var char = 65;
+                var str = new Array();
+                for (let x = 0; x < columnas; x++) {
+                    //str.push(col[x] + (i + 1));
+                    str.push(String.fromCharCode(char) + (i + 1));
+                    char++;
+                }
+                asientos.push(str);
+            }
+            asientos.reverse();
+            console.log(asientos);
+            return asientos;
+        }
+        
+        class Pelicula {
+            constructor(titulo, duracion, edadMinima, director) {
+                this.titulo = titulo;
+                this.duracion = duracion;
+                this.edadMinima = edadMinima;
+                this.director = director;
+            }
+            get toString() {
+                return "<p><b>" + this.titulo + "</b>. Duración: " + this.duracion + " min. Edad mínima: " + this.edadMinima + ". Director: " + this.director + "</p>";
+            }
+        }
+
+        class Espectador {
+            constructor(nombre, edad, dinero) {
+                this.nombre = nombre;
+                this.edad = edad;
+                this.dinero = dinero;
+                this.asiento;
+                this.setAsiento = function (x) { this.asiento = x };
+            }
+
+            get getDinero() {
+                return this.dinero;
+            }
+
+            get toString() {
+                return "<p>" + this.nombre + ", " + this.edad + " años, " + this.dinero + " euros. Asiento: " + ((this.asiento == null) ? "Sin asignar" : this.asiento)  + "</p>";
+            }
+        }
+
+        function creaEspectadores(n) {
+            for (let i = 0; i < n; i++) {
+                //var nombre = "nombre" + (i + 1);
+                var nombre = randomLetra() + randomLetra() + randomLetra();
+                var edad = Math.floor((Math.random() * 40)) + 1; // Pruebo desde 1 a 40 años para acotar
+                var dinero = Math.floor((Math.random() * 50)); // Pruebo de 0 a 50 euros
+                var persona = new Espectador(nombre, edad, dinero);
+                arrayEspectadores.push(persona);
+            }
+        }
+
+        function asignaAsientos(sala) {
+            var asientosLibres = Array.from(sala.asientos); // clono array de asientos
+            var numEspectadores = arrayEspectadores.length;
+            try {
+                for (let i = 0; i < arrayEspectadores.length; i++) { // recorro array
+                    //console.log(asientosLibres);
+                    do {
+                        var randomF = Math.floor((Math.random() * (sala.asientos.length)));
+                        var randomC = Math.floor((Math.random() * (sala.asientos[randomF].length)));
+                    } while (asientosLibres[randomF][randomC] == null);
+                    if (arrayEspectadores[i].dinero >= sala.precio) {
+                        console.log(arrayEspectadores[i].edad);
+                        console.log(sala.pelicula.edadMinima);
+                        if (arrayEspectadores[i].edad >= sala.pelicula.edadMinima) {
+                            arrayEspectadores[i].setAsiento(asientosLibres[randomF][randomC]); // asigno asiento al espectador
+                            asientosLibres[randomF].splice(randomC, 1); // borro asiento del array de libres
+                            console.log(asientosLibres);
+                            console.log(arrayEspectadores[i]);
+                        } else {
+                            msg.insertAdjacentHTML("beforeend", "<p style='color: red;'>El espectador " + arrayEspectadores[i].nombre + " no tiene edad para ver " + sala.pelicula.titulo + "</p>");
+                        } 
+                    } else {
+                        msg.insertAdjacentHTML("beforeend", "<p style='color: red;'>El espectador " + arrayEspectadores[i].nombre + " no tiene suficiente dinero para la entrada de " + sala.pelicula.titulo + "</p>");
+                    }                    
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function randomLetra() {
+            var char = Math.floor((Math.random() * (90 - 65))) + 65;
+            return String.fromCharCode(char);
+        }
+
+        function randomPeli() {
+            var random = Math.floor((Math.random() * (arrayPeliculas.length)));
+            return arrayPeliculas[random]; 
+        }
+
+        function muestra(array) {
+            var texto = array[0].constructor.name;
+            (texto == "Espectador") ? texto += "es" : texto += "s";
+            msg.insertAdjacentHTML("beforeend", "<h3>" + texto +"</h3>");
+            for (let i = 0; i < array.length; i++) {
+                console.log(array[i].toString);
+                texto = array[i].toString;
+                msg.insertAdjacentHTML("beforeend", texto);
+            }
+        }
+
+        var msg = document.getElementById("msg");
+        var arrayPeliculas = new Array();
+        arrayPeliculas.push(new Pelicula("Pelicula 1", 120, 13, "Director 1"));
+        arrayPeliculas.push(new Pelicula("Pelicula 2", 162, 18, "Director 2"));
+        arrayPeliculas.push(new Pelicula("Pelicula 3", 95, 0, "Director 3"));
+        arrayPeliculas.push(new Pelicula("Pelicula 4", 180, 7, "Director 4"));
+        var arraySalas = new Array();
+        arraySalas.push(new Sala(4, 5, randomPeli(), 13));
+        arraySalas.push(new Sala(3, 3, randomPeli(), 12));
+        var arrayEspectadores = new Array();
+        muestra(arraySalas);
+        muestra(arrayPeliculas);
+        creaEspectadores(15);
+        muestra(arrayEspectadores);
+        asignaAsientos(arraySalas[0]);
+        muestra(arrayEspectadores);
+
+    </script>
+
+</body>
+</html>

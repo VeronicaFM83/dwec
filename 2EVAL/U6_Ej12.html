@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="msg"></div>
+    <script>
+        class Libro {
+            constructor(isbn, titulo, autor, paginas) {
+                this.isbn = isbn;
+                this.titulo = titulo;
+                this.autor = autor;
+                this.paginas = paginas;
+                this.setIsbn = function (x) { this.isbn = x };
+                this.setTitulo = function (x) { this.titulo = x };
+                this.setAutor = function (x) { this.autor = x };
+                this.setPaginas = function (x) { this.paginas = x };
+            }
+
+            get toString() {
+                return "El libro titulado '" + this.titulo + "' con ISBN: " + this.isbn + " creado por el autor " + this.autor + " tiene " + this.paginas + " páginas";
+            }
+        }
+
+        function creaLibro(isbn, titulo, autor, paginas) {
+            var nuevoLibro = new Libro(isbn, titulo, autor, paginas);
+            vector.push(nuevoLibro);
+        }
+
+        function borraLibro(isbn_libro) {
+            for (i = 0; i < vector.length; i++) {
+                if (vector[i].isbn === isbn_libro) {
+                    vector.splice(i, 1);
+                    msg.insertAdjacentHTML("beforeend", "<p style = 'color: green;'>Libro borrado</p>");
+                    break;
+                }
+                if (i == vector.length - 1) {
+                    msg.insertAdjacentHTML("beforeend", "<p style='color: red;'>No existe ese libro, no se puede borrar</p>");
+                }
+            }
+        }
+
+        function mostrarLibros(array) {
+            msg.insertAdjacentHTML("beforeend", "<p>Mostrar libros:</p>");
+            for (i = 0; i < array.length; i++) {
+                msg.insertAdjacentHTML("beforeend", array[i].toString + "<br/>");
+            }
+        }
+
+        function masLargo() {
+            var numpags = 0;
+            var libroLargo = null;
+            for (objeto in vector) {
+                if (vector[objeto].paginas > numpags) {
+                    libroLargo = vector[objeto];
+                    numpags = vector[objeto].paginas;
+                }
+            }
+            msg.insertAdjacentHTML("beforeend", "El libro más largo es: " + libroLargo.toString + "<br/>");
+        }
+
+        /*! Ordenar elementos del arreglo por una propiedad numérica. https://deployando.net/2012/08/16/js-ordenar-arreglos-objetos/ */
+        // No sé porqué hace que no funcione bien mostrarLibros() si uso bucle for in
+        Array.prototype.orderByNumber = function (property, sortOrder) {
+            // Primero se verifica que la propiedad sortOrder tenga un dato válido.
+            if (sortOrder != -1 && sortOrder != 1) sortOrder = 1;
+            this.sort(function (a, b) {
+                // La función de ordenamiento devuelve la comparación entre property de a y b.
+                // El resultado será afectado por sortOrder.
+                return (a[property] - b[property]) * sortOrder;
+            })
+        }
+
+        var msg = document.getElementById("msg");
+        var vector = new Array();
+        msg.innerHTML = "<h2>Listado de libros</h2>";
+        creaLibro(12345, "Hola", "Pepe Palotes", 142);
+        creaLibro(456123, "Adios", "Ana Rodriguez", 222);
+        creaLibro(74523, "Otro libro", "Asunción Fdez", 500);
+        creaLibro(3657812, "Titulo desconocido", "Paco Pil", 167);
+        mostrarLibros(vector);
+        borraLibro(123450); // prueba para que falle
+        borraLibro(12345); // borrado
+        mostrarLibros(vector); // vuelvo a mostrar array
+        creaLibro(12345, "Hola", "Pepe Palotes", 142); // vuelvo a crear libro borrado
+        masLargo(); // devuelvo el más largo
+        vector[0].setTitulo("Nuevo titulo"); // modifico un libro
+        vector[0].setIsbn(123);
+        vector[0].setAutor("Mariano Perez");
+        vector[0].setPaginas(115);
+        msg.insertAdjacentHTML("beforeend", vector[0].toString); // lo muestro
+        // EXTRA: Ordenar array por número de páginas
+        vectorOrdenado = Array.from(vector); // clona array
+        vectorOrdenado.orderByNumber("paginas", 1); // de menor a mayor
+        msg.insertAdjacentHTML("beforeend", "<h3>Vector tal cual: </h3>");
+        mostrarLibros(vector);
+        msg.insertAdjacentHTML("beforeend", "<h3>Vector ordenado: </h3>");
+        mostrarLibros(vectorOrdenado);
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Tres en raya</title>
+    <style>
+        .linea input {
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="player"></div>
+    <div id="tablero">
+        <div class="linea">
+            <input type="button" id="c11" value=" " onclick="pinta(this)" />
+            <input type="button" id="c12" value=" " onclick="pinta(this)" />
+            <input type="button" id="c13" value=" " onclick="pinta(this)" />
+        </div>
+        <div class="linea">
+            <input type="button" id="c21" value=" " onclick="pinta(this)" />
+            <input type="button" id="c22" value=" " onclick="pinta(this)" />
+            <input type="button" id="c23" value=" " onclick="pinta(this)" />
+        </div>
+        <div class="linea">
+            <input type="button" id="c31" value=" " onclick="pinta(this)" />
+            <input type="button" id="c32" value=" " onclick="pinta(this)" />
+            <input type="button" id="c33" value=" " onclick="pinta(this)" />
+        </div>
+    </div>
+    <input type="button" value="Auto" onclick="auto()" />
+    <input type="button" value="Reiniciar" onclick="location.reload()" />
+    <div id="msg"></div>
+
+    <script language="Javascript" type="text/javascript">
+        var player = document.getElementById("player");
+        var msg = document.getElementById("msg");
+        var alterna = 1;
+        var gana1 = 0;
+        var gana2 = 0;
+        var arPlayer1 = new Array();
+        var arPlayer2 = new Array();
+        var opc = ["c11","c12","c13","c21","c22","c23","c31","c32","c33"];
+
+        player.innerHTML = "Jugador " + alterna;
+
+        function pinta(boton) {
+            if ((boton.value == " ") && (gana1 < 3) && (gana2 < 3)) {
+                if (alterna == 1) {
+                    boton.value = "X";
+                    arPlayer1.push(boton.id);
+                    alterna = 2;
+                } else if (alterna == 2) {
+                    boton.value = "O";
+                    arPlayer2.push(boton.id);
+                    alterna = 1;
+                } else {
+                    msg.innerHTML = "OJO, ALGO NO VA BIEN";
+                }
+            }
+            comprueba();
+            player.innerHTML = "Jugador " + alterna;
+        }
+
+        function comprueba() {
+            var jugadas = [["c11", "c12", "c13"], ["c21", "c22", "c23"], ["c31", "c32", "c33"]];//FALTA METER MAS
+            for (var i = 0; i < jugadas.length; i++) {
+                gana1 = 0;
+                gana2 = 0;
+                for (var j = 0; j < 3; j++) {
+                    //msg.innerHTML = arPlayer1 + "P1:" + "<br/> P2:" + arPlayer2 + "<br/>";
+                    if (arPlayer1.includes(jugadas[i][j])) {
+                        gana1++;
+                        if (gana1 == 3) {
+                            alert("HA GANADO JUGADOR 1!");
+                            break;
+                        }
+                    }
+                    if (arPlayer2.includes(jugadas[i][j])) {
+                        gana2++;
+                        if (gana2 == 3) {
+                            alert("HA GANADO JUGADOR 2!");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        function auto() {
+            if (opc.length > 1) {
+                do {
+                    var r = Math.round(Math.random() * (opc.length - 0) + 0)
+                    var btn_auto = document.getElementById(opc[r]);
+                    //msg.innerHTML = r + " obj" + btn_auto;
+                } while ((btn_auto == null || btn_auto.value != " ") && opc.length > 1);
+                pinta(btn_auto);
+                opc.splice(r, 1);
+            } else if (opc.length == 1) {
+                var btn_auto = document.getElementById(opc[0]);
+                pinta(btn_auto);
+            }
+        }
+
+    </script>
+</body>
+</html>
