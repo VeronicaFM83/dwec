@@ -154,3 +154,12 @@ https://appdividend.com/2020/08/01/javascript-remove-character-from-string-examp
 
 -- Expresiones regulares --- 
 https://appdividend.com/2018/10/05/javascript-regular-expressions-example-tutorial/
+
+--- Eliminar acentos --
+
+       const removeAccents = (str) => {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        } 
+		
+normalize()Al usar NFD  la forma normal Unicode descompone los grafemas combinados en la combinación de unos simples. El ède Crèmetermina expresado como e+  ̀.
+Usando una clase de carácter regex para que coincida con el rango U + 0300 → U + 036F, ahora es trivial deshacerse globalmente de los diacríticos, que el estándar Unicode agrupa convenientemente como el bloque Unicode de combinación de marcas diacríticas .
