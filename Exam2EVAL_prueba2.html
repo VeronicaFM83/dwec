@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>MASCOTAS</title>
+    <style>
+
+        td, tr, th {
+            border: 1px solid black;
+            min-width: 50px;
+            height: 30px;
+            text-align: center;
+        }
+        th {
+            font: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="botones">
+        <input type="button" value="Crear Mascota" onclick="nuevaMascota()" />
+        <input type="button" value="Vacunar" onclick="vacunarMascota()" />
+        <input type="button" value="Listar" onclick="imprimir()" />
+    </div>
+    <div id="contenido"></div>
+    <div id="msg"></div>
+
+    <script>
+        class Mascota {
+            constructor(nombre, duenio) {
+                this.nombre = nombre;
+                this.duenio = duenio;
+                this.vacunas_ = [];
+            }
+
+            get toString() {
+                return "Mascota llamada " + this.nombre + " del dueño " + this.duenio + ". Vacunas: " + this.vacunas_;
+            }
+
+            get toTable() {
+                return "<tr><td>" + this.nombre + "</td><td>" + this.duenio + "</td><td>" + this.vacunas_ + "</td></tr>";
+            }
+
+            set ponerVacuna(vacuna) {
+                this.vacunas_.push(vacuna);
+            }
+        }
+
+        class Vacuna {
+            constructor(fecha) {
+                this.fecha = fecha;
+            }
+
+            get toString() {
+                return "Fecha: " + this.fecha + ". ";
+            }
+        }
+
+        var contenido = document.getElementById("contenido");
+        var msg = document.getElementById("msg");
+        contenido.innerHTML = "No hay mascotas en la lista";
+        var mascotas = [];
+
+        // NUEVA MASCOTA
+        function nuevaMascota() {
+            var nombre;
+            while (!isNaN(nombre) || nombre == null) {
+                nombre = prompt("Nombre de la mascota", "Tuko");
+            }
+            var duenio;
+            while (!isNaN(duenio) || duenio == null) {
+                duenio = prompt("Nombre del dueño", "Vero");
+            }
+            var existe = false;
+            for (var i = 0; i < mascotas.length; i++) {
+                console.log(mascotas[i]);
+                if (mascotas[i].nombre === nombre) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (!existe) {
+                mascotas.push(new Mascota(nombre, duenio));
+                imprimir();
+            } else {
+                msg.innerHTML = "La mascota " + nombre + " ya existe";
+            }
+
+        }
+
+        // VACUNAR
+        function vacunarMascota() {
+            var nombre;
+             while (!isNaN(nombre) || nombre == null) {
+                 nombre = prompt("Nombre de la mascota a vacunar", "Tuko");
+            }
+            var encuentra = -1;
+            for (x in mascotas) {
+                if (mascotas[x].nombre.toUpperCase() == nombre.toUpperCase()) {
+                    encuentra = x;
+                    break;
+                }
+                txt = "Contacto no encontrado";
+            }
+            if (encuentra == -1) {
+                msg.innerHTML = "<p style='color: red;'>No se ha encontrado a " + nombre + "</p>";
+            } else {
+                let hoy = new Date();
+                let anyo = hoy.getFullYear();
+                let mes = (hoy.getMonth())+1;
+                let dia = hoy.getDate();
+                let fecha = dia + "/" + mes + "/" + anyo;
+                mascotas[encuentra].ponerVacuna = fecha;
+                imprimir();
+                msg.innerHTML = "<p>Se ha vacunado a " + nombre + " (Posición " + (++x) + ")</p>";
+            }
+
+        }
+
+        // IMPRIMIR
+        function imprimir() {
+            msg.innerHTML = "";
+            var str = "<table><tr><th>Nombre</th><th>Dueño</th><th>Vacunas</th></tr>";
+            for (i = 0; i < mascotas.length; i++) {
+                console.log(mascotas[i].toTable);
+                str += mascotas[i].toTable;
+            }
+            str += "</table>";
+            contenido.innerHTML = str;
+        }
+
+        /* PRUEBAS
+        mascotas.push(new Mascota("Tuko", "Vero"));
+        mascotas.push(new Mascota("Samba", "Juan"));
+        mascotas.push(new Mascota("Brisa", "Julia"));
+
+        for (i = 0; i < mascotas.length; i++) {
+            contenido.insertAdjacentHTML("beforeend", mascotas[i].toString + "<br/>");
+        }
+
+        var vacuna1 = new Vacuna("12/05/20219");
+
+        var prueba = new Mascota("pupi", "roman");
+        console.log(prueba);
+        prueba.ponerVacuna = vacuna1;
+        console.log(prueba);
+        */
+
+
+
+    </script>
+</body>
+</html>

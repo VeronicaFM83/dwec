@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>MOSCAS</title>
+    <style>
+
+        td, tr {
+            border: 1px solid black;
+            min-width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="botones">
+        <input type="button" value="Crea mosca" onclick="mosca(grid)" />
+        <input type="button" value="Limpiar" onclick="imprime(grid = vacio())" />
+    </div>
+
+    <div id="contenido"></div>
+    <div id="msg"></div>
+
+    <script>
+
+        var contenido = document.getElementById("contenido");
+        var msg = document.getElementById("msg");
+
+        /**
+         * Crea una tabla de 8x8 y posiciona moscas en ubicaciones aleatorias
+         */
+
+        var a = 8;
+        var b = 8;
+        var grid = vacio();
+        var contador = 0;
+        imprime(grid);
+        
+
+        /* Array VACIO */
+        function vacio() {
+            var grid = [];
+            for (var i = 0; i < a; i++) {
+                grid[i] = [];
+                for (var x = 0; x < b; x++) {
+                    grid[i][x] = " ";
+                }
+            }
+            contador = 0;
+            console.log(grid);
+            return grid;
+        }
+        
+        /* Colocar mosca */
+        function mosca(grid) {
+            var r1 = Math.floor(Math.random() * a);
+            var r2 = Math.floor(Math.random() * b);
+            grid[r1][r2] = "Mosca";
+            contador++;
+            imprime(grid);
+        }
+
+        /* IMPRIMIR */
+        function imprime(grid) {
+            var txt = "<table>";
+            for (var i = 0; i < 8; i++) {
+                txt += "<tr>";
+                for (var x = 0; x < 8; x++) {
+                    txt += "<td>" + grid[i][x] + "</td>";
+                }
+                txt += "</tr>";
+            }
+            txt += "</table>";
+            contenido.innerHTML = txt;
+            var posiciones = encuentra(grid);
+            msg.innerHTML = "Nº moscas: " + contador + "<br/>" + posiciones;
+        }
+
+        /* Encontrar moscas */
+        function encuentra(array) {
+            var posiciones = "Posiciones:<br/>";
+            for (var i = 0; i < array.length; i++) {
+                for (var x = 0; x < array.length; x++) {
+                    console.log(array[i][x]);
+                    if (array[i][x] == "Mosca") {
+                        posiciones += "Fila " + (i + 1) + ", Columna: " + (x + 1) + "<br/>";
+                    }
+                }
+            }
+            return posiciones;
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,5 +1,12 @@
 https://github.com/VeronicaFM83/tareagitcampus.git
 
+--- RANDOM ---
+//FUNCIÓN Math.floor: redondea al número entero menor. 
+//FUNCIÓN Math.random: devuelve un número aleatorio mayor que 0 y menor que 1 
+var num = Math.floor((Math.random() * 99) + 1); 
+document.write(num);
+// Genera nums entre 0 y 100
+
 
 --- HTML5 ---
 
@@ -163,3 +170,46 @@ https://appdividend.com/2018/10/05/javascript-regular-expressions-example-tutori
 		
 normalize()Al usar NFD  la forma normal Unicode descompone los grafemas combinados en la combinación de unos simples. El ède Crèmetermina expresado como e+  ̀.
 Usando una clase de carácter regex para que coincida con el rango U + 0300 → U + 036F, ahora es trivial deshacerse globalmente de los diacríticos, que el estándar Unicode agrupa convenientemente como el bloque Unicode de combinación de marcas diacríticas .
+
+-- Desordenar un array --
+arrLetras = arrLetras.sort(function () { return Math.random() - 0.5 }); // desordeno el array de letras
+
+
+-- ENCONTRAR Elementos en un ARRAY ---
+
+Usando indexOf()
+El siguiente ejemplo usa indexof() para localizar valores en un array 
+
+var array = [2, 9, 9];
+array.indexOf(2);     // 0
+array.indexOf(7);     // -1
+array.indexOf(9, 2);  // 2
+array.indexOf(2, -1); // -1
+array.indexOf(2, -3); // 0
+Encontrar todas las apariciones de un elemento
+var indices = [];
+var array = ['a', 'b', 'a', 'c', 'a', 'd'];
+var element = 'a';
+var idx = array.indexOf(element);
+while (idx != -1) {
+  indices.push(idx);
+  idx = array.indexOf(element, idx + 1);
+}
+console.log(indices);
+// [0, 2, 4]
+Encontrar si un elemento existe en la matriz o no y actualizar la matriz
+function updateVegetablesCollection (veggies, veggie) {
+    if (veggies.indexOf(veggie) === -1) {
+        veggies.push(veggie);
+        console.log('La nueva colección de vegetales es: ' + veggies);
+    } else if (veggies.indexOf(veggie) > -1) {
+        console.log(veggie + ' ya existe en la colección de verduras.');
+    }
+}
+
+var veggies = ['patata', 'tomate', 'chiles', 'pimientoverde'];
+
+updateVegetablesCollection(veggies, 'espinaca');
+// La nueva colección de verduras es : patata, tomate, chiles, pimientoverde, espinaca
+updateVegetablesCollection(veggies, 'espinaca');
+// La espinaca ya existe en la colección de verduras.
